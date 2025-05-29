@@ -1,0 +1,41 @@
+# Values for gitlab/gitlab chart on GKE
+global:
+  edition: ce
+  hosts:
+    domain: xip.io
+    https: true
+    gitlab: {}
+    externalIP: 35.225.196.151 #Replace by your Nginx Ingress ExternalIP
+    ssh: ~
+    gitlab:
+      name: vcs.sepidan.net
+      https: true
+    registry:
+      name: gitlab-registry.sepidan.net
+      https: true
+    minio:
+      name: gitlab-minio.sepidan.net
+      https: true
+  minio:
+    enabled: true
+  ## doc/charts/globals.md#configure-ingress-settings
+  ingress:
+    configureCertmanager: false
+    class: "nginx"
+    enabled: true
+    tls:
+      enabled: true
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: false
+prometheus:
+  install: true
+redis:
+  install: true
+postgresql:
+  install: true
+gitlab-runner:
+  install: true
+registry:
+  enable: true

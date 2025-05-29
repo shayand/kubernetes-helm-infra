@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sepidan-redirect-www
+  namespace: sepidan-website
+  annotations:
+
+    nginx.ingress.kubernetes.io/permanent-redirect: https://sepidan.net
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - www.sepidan.net
+    secretName: sepidan-net-tls
+  rules:
+  - host: www.sepidan.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sepidan-net
+            port:
+              number: 80

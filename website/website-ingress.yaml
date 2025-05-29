@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sepidan-ingress
+  namespace: sepidan-website
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - sepidan.net
+    secretName: sepidan-net-cert 
+  rules:
+  - host: sepidan.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sepidan-net
+            port:
+              number: 80
+  

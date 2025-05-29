@@ -1,0 +1,23 @@
+# Namespace
+namespace: minio
+#createNamespace: true
+
+# Authentication (Kubernetes Secret)
+auth:
+  rootUser: root
+  rootPassword: oh7245D2uRze
+
+# MinIO Server Configuration
+mode: standalone
+replicas: 1
+resources:
+  requests:
+    memory: 2048Mi
+
+# Persistent Storage (15GB PVC)
+persistence:
+  existingClaim: "minio-pvc"  
+
+# Web Console (UI)
+console:
+  enabled: true

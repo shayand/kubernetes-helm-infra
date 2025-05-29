@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sepidan-net
+  namespace: sepidan-website
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 80
+    targetPort: 8090
+    protocol: TCP
+    name: http
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: sepidan-net
+  namespace: sepidan-website
+subsets:
+- addresses:
+  - ip: 192.168.1.10
+  ports:
+  - port: 8090
+    name: http

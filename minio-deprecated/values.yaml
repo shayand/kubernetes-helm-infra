@@ -1,0 +1,117 @@
+## MinIO Server Configuration
+## ref: https://min.io/docs/minio/container/operations/installation.html
+
+image:
+  repository: docker.arvancloud.ir/minio/minio
+  tag: RELEASE.2025-02-28T09-55-16Z
+  pullPolicy: IfNotPresent
+
+mode: standalone # or 'distributed'
+replicas: 1
+
+## Expose the MinIO service to be accessed from outside the cluster (LoadBalancer service).
+## or access it from within the cluster (ClusterIP service).
+service:
+  type: ClusterIP
+  port: 9000
+  nodePort: null
+  loadBalancerIP: ""
+  annotations: {}
+  # cloud.google.com/load-balancer-type: "Internal"
+
+## Additional server environment variables
+env:
+   MINIO_ROOT_USER: root
+   MINIO_ROOT_PASSWORD: oh7245D2uRze
+   MINIO_SERVER_URL: "https://storage.sepidan.net"
+
+## Persist data to a persistent volume
+persistence:
+  enabled: true
+  size: 20Gi
+  storageClass: local-storage
+  accessMode: ReadWriteOnce
+  annotations: {}
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
+
+## Configure Pod Security Context
+securityContext:
+  enabled: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+## Configure TLS
+tls:
+  enabled: false
+  # certSecret: "minio-cert"
+  # publicCrt: "public.crt"
+  # privateKey: "private.key"
+
+## Configure Ingress
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: storage.sepidan.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+## Configure NetworkPolicy
+networkPolicy:
+  enabled: false
+  ingress: []
+
+## Configure Pod Disruption Budget
+pdb:
+  enabled: false
+  maxUnavailable: 1
+
+## Configure liveness and readiness probes
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+## Sidecar containers
+sidecars: []
+
+## Additional pod annotations
+podAnnotations: {}
+
+## Additional pod labels
+podLabels: {}
+
+## Affinity for pod assignment
+affinity: {}
+
+## Node labels for pod assignment
+nodeSelector: {}
+
+## Tolerations for pod assignment
+tolerations: []
+
+## Additional volumes to the pod
+extraVolumes: []
+
+## Additional volume mounts to the MinIO container
+extraVolumeMounts: []

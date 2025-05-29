@@ -1,0 +1,23 @@
+global:
+  edition: ce
+  hosts:
+    domain: vcs.sepidan.net
+    externalIP: 192.168.1.20
+  ingress:
+    configureCertmanager: false
+    enabled: true
+    class: nginx
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: true
+postgresql:
+  install: true
+  postgresqlPassword: g7r4hCPHVyqjKX
+redis:
+  install: true
+registry:
+  enabled: false
+prometheus:
+  install: false
+
