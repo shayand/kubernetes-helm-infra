@@ -1,0 +1,24 @@
+postgresql:
+  enabled: false
+
+externalDatabase:
+  host: postgres-headless.postgres.svc.cluster.local
+  port: 5432
+  user: keycloak
+  password: pzNPYzJpwnB7Cs
+  database: keycloak
+
+extraEnvVars:
+  - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: KEYCLOAK_HOSTNAME
+    value: https://sso.sepidan.net
+  - name: KEYCLOAK_HOSTNAME_URL
+    value: https://sso.sepidan.net
+  - name: KEYCLOAK_HOSTNAME_STRICT_HTTPS
+    value: "true"
+  - name: KC_HOSTNAME
+    value: https://sso.sepidan.net
+  - name: KC_HOSTNAME_ADMIN
+    value: https://sso.sepidan.net
+

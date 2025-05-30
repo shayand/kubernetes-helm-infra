@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iam-ingress
+  namespace: iam
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/x-forwarded-proto: "https"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - sso.sepidan.net
+    secretName: iam-tls
+  rules:
+  - host: sso.sepidan.net
+    http:
+      paths:
+      - path: /   
+        pathType: Prefix
+        backend:
+          service:
+            name: keycloak
+            port:
+              number: 80
